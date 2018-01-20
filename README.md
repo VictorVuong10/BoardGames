@@ -1,2 +1,3 @@
 BoardGames
-1.Checker Game
+
+1. Checker Game
