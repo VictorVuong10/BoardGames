@@ -1,8 +1,5 @@
-import javafx.application.Application;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.input.MouseEvent;
 
@@ -13,9 +10,7 @@ import javafx.scene.input.MouseEvent;
  * @author Victor A01021299
  * @version 1.0
  */
-public class Check extends Application {
-
-    private GridPane board;
+public class Check extends GridPane {
     private Boolean turnW = true; 
     private Boolean move = false;
     private Squares currentSquare;
@@ -32,11 +27,9 @@ public class Check extends Application {
     private Squares eatKUL;
     private Squares eatKUR;
     
-    @Override
-    public void start(Stage primaryStage) {
+    public Check() {
         
         
-        board = new GridPane();
         
         int color = 0;
         for (int row = 0; row < 8; row++) {
@@ -59,24 +52,18 @@ public class Check extends Application {
                    square.setOnMouseClicked(this::move);
                     }
                 }
-                board.add(square, col, row);
+                add(square, col, row);
 
                 color++;
             }
         }
-        
-        
-        final int appWidth = 800;
-        final int appHeight = 800;
-        Scene scene = new Scene(board, appWidth, appHeight, Color.WHITE);
+        }
         
         
         
         
-        primaryStage.setTitle("Check");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
+        
+        
     
     public void move(MouseEvent event) {
         if(!move) {
@@ -436,7 +423,7 @@ public class Check extends Application {
             int rightCol = currentCol + 1;
             
             if (leftCol >= 0 && downRow < 8) {
-                for (Node node : board.getChildren()) {
+                for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == leftCol && GridPane.getRowIndex(node) == downRow) {
                         kingDownLeft = (Squares) node;
                     }
@@ -450,7 +437,7 @@ public class Check extends Application {
             }
             
             if (rightCol < 8 && downRow < 8) {
-                for (Node node : board.getChildren()) {
+                for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == rightCol && GridPane.getRowIndex(node) == downRow) {
                         kingDownRight = (Squares) node;
                     }
@@ -464,7 +451,7 @@ public class Check extends Application {
             }
             
             if (leftCol >= 0 && upRow >= 0) {
-                for (Node node : board.getChildren()) {
+                for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == leftCol && GridPane.getRowIndex(node) == upRow) {
                         kingUpLeft = (Squares) node;
                     }
@@ -476,7 +463,7 @@ public class Check extends Application {
             }
             
             if (rightCol < 8 && upRow >= 0) {
-                for (Node node : board.getChildren()) {
+                for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == rightCol && GridPane.getRowIndex(node) == upRow) {
                         kingUpRight = (Squares) node;
                     }
@@ -542,7 +529,7 @@ public class Check extends Application {
                         
                         eatKDL = kingDownLeft;
                         
-                        for (Node node : board.getChildren()) {
+                        for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
                                 kingDownLeft = (Squares) node;
                             }
@@ -572,7 +559,7 @@ public class Check extends Application {
                         
                         eatKDR = kingDownRight;
                         
-                        for (Node node : board.getChildren()) {
+                        for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
                                 kingDownRight = (Squares) node;
                             }
@@ -602,7 +589,7 @@ public class Check extends Application {
                         
                         eatKUL = kingUpLeft;
                         
-                        for (Node node : board.getChildren()) {
+                        for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
                                 kingUpLeft = (Squares) node;
                             }
@@ -632,7 +619,7 @@ public class Check extends Application {
                         
                         eatKUR = kingUpRight;
                         
-                        for (Node node : board.getChildren()) {
+                        for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
                                 kingUpRight = (Squares) node;
                             }
@@ -671,7 +658,7 @@ public class Check extends Application {
             eatSquareL = null;
             
             if (leftCol >= 0 && leftRow < 8) {
-                for (Node node : board.getChildren()) {
+                for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == leftCol && GridPane.getRowIndex(node) == leftRow) {
                         leftSquare = (Squares) node;
                     }
@@ -686,7 +673,7 @@ public class Check extends Application {
             }
             
             if (rightCol < 8 && rightRow < 8) {
-                for (Node node : board.getChildren()) {
+                for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == rightCol && GridPane.getRowIndex(node) == rightRow) {
                         rightSquare = (Squares) node;
                     }
@@ -736,7 +723,7 @@ public class Check extends Application {
                         
                         eatSquareL = leftSquare;
                         
-                        for (Node node : board.getChildren()) {
+                        for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
                                 leftSquare = (Squares) node;
                             }
@@ -769,7 +756,7 @@ public class Check extends Application {
                         
                         eatSquareR = rightSquare;
                         
-                        for (Node node : board.getChildren()) {
+                        for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
                                 rightSquare = (Squares) node;
                             }
@@ -791,8 +778,8 @@ public class Check extends Application {
         
         if(turnW) {
             currentSquare.select();
-            int currentCol = board.getColumnIndex(currentSquare);
-            int currentRow = board.getRowIndex(currentSquare);
+            int currentCol = getColumnIndex(currentSquare);
+            int currentRow = getRowIndex(currentSquare);
             
             
             int leftCol = currentCol - 1;
@@ -806,7 +793,7 @@ public class Check extends Application {
             eatSquareL = null;
             
             if (leftCol >= 0 && leftRow >= 0) {
-                for (Node node : board.getChildren()) {
+                for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == leftCol && GridPane.getRowIndex(node) == leftRow) {
                         leftSquare = (Squares) node;
                     }
@@ -821,7 +808,7 @@ public class Check extends Application {
             }
             
             if (rightCol < 8 && rightRow >= 0) {
-                for (Node node : board.getChildren()) {
+                for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == rightCol && GridPane.getRowIndex(node) == rightRow) {
                         rightSquare = (Squares) node;
                     }
@@ -874,7 +861,7 @@ public class Check extends Application {
                         
                         eatSquareL = leftSquare;
                         
-                        for (Node node : board.getChildren()) {
+                        for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
                                 leftSquare = (Squares) node;
                             }
@@ -907,7 +894,7 @@ public class Check extends Application {
                         
                         eatSquareR = rightSquare;
                         
-                        for (Node node : board.getChildren()) {
+                        for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
                                 rightSquare = (Squares) node;
                             }
@@ -930,14 +917,5 @@ public class Check extends Application {
         }
     }
 
-    /**
-     * Launches the JavaFX application.
-     * 
-     * @param args
-     *            command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
     
 }
