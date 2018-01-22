@@ -26,9 +26,12 @@ public class Check extends GridPane {
     private Squares eatKDR;
     private Squares eatKUL;
     private Squares eatKUR;
+    private int deadW;
+    private int deadB;
+    private Main main;
     
-    public Check() {
-        
+    public Check(Main main) {
+        this.main = main;
         
         
         int color = 0;
@@ -91,8 +94,15 @@ public class Check extends GridPane {
                         if (eatSquareL != null) {
                             if (!piece.getTeam().equals(eatSquareL.getPiece().getTeam())) {
                                 eatSquareL.removePiece();
+                                if(turnW) {
+                                    deadB++;
+                                } else {
+                                    deadW++;
+                                }
+                                
                             }
                         }
+                        main.getWinner();
                         leftSquare.addPiece(piece);
                         if (GridPane.getRowIndex(leftSquare) == 7 && piece.getTeam().equals("black") && !piece.isKing()) {
                             piece.kinged();
@@ -128,8 +138,14 @@ public class Check extends GridPane {
                             if (!piece.getTeam().equals(eatSquareR.getPiece().getTeam())) {
                                 System.out.println("hello");
                                 eatSquareR.removePiece();
+                                if(turnW) {
+                                    deadB++;
+                                } else {
+                                    deadW++;
+                                }
                             }
                         }
+                        main.getWinner();
                         rightSquare.addPiece(piece);
                         if (GridPane.getRowIndex(rightSquare) == 7 && piece.getTeam().equals("black") && !piece.isKing()) {
                             piece.kinged();
@@ -179,6 +195,12 @@ public class Check extends GridPane {
                     
                     if (eatKUL != null) {
                         if (!piece.getTeam().equals(eatKUL.getPiece().getTeam())) {
+                            if(turnW) {
+                                deadB++;
+                            } else {
+                                deadW++;
+                            }
+                            main.getWinner();
                             eatKUL.removePiece();
                             eatKUL = null;
                             eatKUR = null;
@@ -220,6 +242,12 @@ public class Check extends GridPane {
                     
                     if (eatKUR != null) {
                         if (!piece.getTeam().equals(eatKUR.getPiece().getTeam())) {
+                            if(turnW) {
+                                deadB++;
+                            } else {
+                                deadW++;
+                            }
+                            main.getWinner();
                             eatKUR.removePiece();
                             eatKUL = null;
                             eatKUR = null;
@@ -261,6 +289,12 @@ public class Check extends GridPane {
                     
                     if (eatKDL != null) {
                         if (!piece.getTeam().equals(eatKDL.getPiece().getTeam())) {
+                            if(turnW) {
+                                deadB++;
+                            } else {
+                                deadW++;
+                            }
+                            main.getWinner();
                             eatKDL.removePiece();
                             eatKUL = null;
                             eatKUR = null;
@@ -302,6 +336,12 @@ public class Check extends GridPane {
                     
                     if (eatKDR != null) {
                         if (!piece.getTeam().equals(eatKDR.getPiece().getTeam())) {
+                            if(turnW) {
+                                deadB++;
+                            } else {
+                                deadW++;
+                            }
+                            main.getWinner();
                             eatKDR.removePiece();
                             eatKUL = null;
                             eatKUR = null;
@@ -917,5 +957,12 @@ public class Check extends GridPane {
         }
     }
 
+    public String winner() {
+        if (deadW == 12) {
+            return "black";
+        } else if (deadB == 12) {
+            return "white";
+        } return "none";
+    }
     
 }

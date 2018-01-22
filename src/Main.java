@@ -11,9 +11,11 @@ import javafx.event.ActionEvent;
 
 public class Main extends Application {
 
+    private Check checkers;
     private Group game;
     @Override
     public void start(Stage primaryStage) throws Exception {
+        checkers = new Check(this);
         final int appWidth = 800;
         final int appHeight = 800;
         Text welcome = new Text(400, 150, "WELCOME\n\n Pick a game");
@@ -33,8 +35,24 @@ public class Main extends Application {
 
     private void checkers(ActionEvent event) {
         game.getChildren().clear();
-        game.getChildren().add(new Check());
+        game.getChildren().add(checkers);
     }
+    
+    public void getWinner() {
+        if (checkers.winner().equals("white")) {
+            game.getChildren().clear();
+            Text winner = new Text(400, 150, "White is winner");
+            winner.setFill(Color.WHITE);
+            game.getChildren().add(winner);
+        } else if (checkers.winner().equals("black")) {
+            game.getChildren().clear();
+            Text winner = new Text(400, 150, "Black is winner");
+            winner.setFill(Color.WHITE);
+            game.getChildren().add(winner);
+        }
+        
+    }
+    
 
     public static void main(String[] args) {
         launch(args);
