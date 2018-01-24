@@ -13,19 +13,19 @@ import javafx.scene.input.MouseEvent;
 public class Check extends GridPane {
     private Boolean turnW = true; 
     private Boolean move = false;
-    private Squares currentSquare;
-    private Squares leftSquare;
-    private Squares rightSquare;
-    private Squares eatSquareL;
-    private Squares eatSquareR;
-    private Squares kingUpLeft;
-    private Squares kingDownLeft;
-    private Squares kingUpRight;
-    private Squares kingDownRight;
-    private Squares eatKDL;
-    private Squares eatKDR;
-    private Squares eatKUL;
-    private Squares eatKUR;
+    private CheckerSquares currentSquare;
+    private CheckerSquares leftSquare;
+    private CheckerSquares rightSquare;
+    private CheckerSquares eatSquareL;
+    private CheckerSquares eatSquareR;
+    private CheckerSquares kingUpLeft;
+    private CheckerSquares kingDownLeft;
+    private CheckerSquares kingUpRight;
+    private CheckerSquares kingDownRight;
+    private CheckerSquares eatKDL;
+    private CheckerSquares eatKDR;
+    private CheckerSquares eatKUL;
+    private CheckerSquares eatKUR;
     private int deadW;
     private int deadB;
     private Main main;
@@ -36,22 +36,22 @@ public class Check extends GridPane {
         
         int color = 0;
         for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 9; col++) {
-                Squares square;
+            for (int col = 0; col < 8; col++) {
+                CheckerSquares square;
                 if (color % 2 == 0) {
-                   square = new Squares(Color.YELLOW);
+                   square = new CheckerSquares(Color.YELLOW);
                 } else {
                     if(row <= 2) {
-                        Pieces pieceB = new Pieces(Color.BLACK);
+                        CheckerPieces pieceB = new CheckerPieces(Color.BLACK);
 
-                        square = new Squares(Color.PURPLE, pieceB);
+                        square = new CheckerSquares(Color.PURPLE, pieceB);
                         square.setOnMouseClicked(this::move);
                     } else if (row >=5 ) {
-                        Pieces pieceW = new Pieces(Color.WHITE);
-                        square = new Squares(Color.PURPLE, pieceW);
+                        CheckerPieces pieceW = new CheckerPieces(Color.WHITE);
+                        square = new CheckerSquares(Color.PURPLE, pieceW);
                         square.setOnMouseClicked(this::move);
                     } else {
-                   square = new Squares(Color.PURPLE);
+                   square = new CheckerSquares(Color.PURPLE);
                    square.setOnMouseClicked(this::move);
                     }
                 }
@@ -59,6 +59,7 @@ public class Check extends GridPane {
 
                 color++;
             }
+            color++;
         }
         }
         
@@ -73,7 +74,7 @@ public class Check extends GridPane {
             if (currentSquare != null) {
                 currentSquare.deselect();
             }
-            Squares square = (Squares) event.getSource();
+            CheckerSquares square = (CheckerSquares) event.getSource();
             currentSquare = square;
             if(square.hasPiece()) {
                 if (!square.getPiece().isKing()) {
@@ -87,9 +88,9 @@ public class Check extends GridPane {
                 }
             }
         } else if (!currentSquare.getPiece().isKing()) {
-            if(leftSquare == (Squares) event.getSource()) {
+            if(leftSquare == (CheckerSquares) event.getSource()) {
                 if (!leftSquare.hasPiece()) {
-                        Pieces piece = currentSquare.getPiece();
+                        CheckerPieces piece = currentSquare.getPiece();
                         currentSquare.removePiece();
                         if (eatSquareL != null) {
                             if (!piece.getTeam().equals(eatSquareL.getPiece().getTeam())) {
@@ -129,9 +130,9 @@ public class Check extends GridPane {
                         }
                         
                 }
-            } else if (rightSquare == (Squares) event.getSource()) {
+            } else if (rightSquare == (CheckerSquares) event.getSource()) {
                     if (!rightSquare.hasPiece()) {
-                        Pieces piece = currentSquare.getPiece();
+                        CheckerPieces piece = currentSquare.getPiece();
                         currentSquare.removePiece();
                         
                         if (eatSquareR != null) {
@@ -188,9 +189,9 @@ public class Check extends GridPane {
                 eatSquareL = null;
             }
         } else if ((currentSquare.getPiece().isKing() && currentSquare.getPiece().getTeam().equals("black") && turnW == false) || (currentSquare.getPiece().isKing() && currentSquare.getPiece().getTeam().equals("white") && turnW == true)) {
-            if (kingUpLeft == (Squares) event.getSource()) {
+            if (kingUpLeft == (CheckerSquares) event.getSource()) {
                 if (!kingUpLeft.hasPiece()) {
-                    Pieces piece = currentSquare.getPiece();
+                    CheckerPieces piece = currentSquare.getPiece();
                     currentSquare.removePiece();
                     
                     if (eatKUL != null) {
@@ -235,9 +236,9 @@ public class Check extends GridPane {
                         turnW = false;
                     }
                 }
-            } else if (kingUpRight == (Squares) event.getSource()) {
+            } else if (kingUpRight == (CheckerSquares) event.getSource()) {
                 if (!kingUpRight.hasPiece()) {
-                    Pieces piece = currentSquare.getPiece();
+                    CheckerPieces piece = currentSquare.getPiece();
                     currentSquare.removePiece();
                     
                     if (eatKUR != null) {
@@ -282,9 +283,9 @@ public class Check extends GridPane {
                         turnW = false;
                     }
                 }
-            } else if (kingDownLeft == (Squares) event.getSource()) {
+            } else if (kingDownLeft == (CheckerSquares) event.getSource()) {
                 if (!kingDownLeft.hasPiece()) {
-                    Pieces piece = currentSquare.getPiece();
+                    CheckerPieces piece = currentSquare.getPiece();
                     currentSquare.removePiece();
                     
                     if (eatKDL != null) {
@@ -329,9 +330,9 @@ public class Check extends GridPane {
                         turnW = false;
                     }
                 }
-            } else if (kingDownRight == (Squares) event.getSource()) {
+            } else if (kingDownRight == (CheckerSquares) event.getSource()) {
                 if(!kingDownRight.hasPiece()) {
-                    Pieces piece = currentSquare.getPiece();
+                    CheckerPieces piece = currentSquare.getPiece();
                     currentSquare.removePiece();
                     
                     if (eatKDR != null) {
@@ -465,7 +466,7 @@ public class Check extends GridPane {
             if (leftCol >= 0 && downRow < 8) {
                 for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == leftCol && GridPane.getRowIndex(node) == downRow) {
-                        kingDownLeft = (Squares) node;
+                        kingDownLeft = (CheckerSquares) node;
                     }
                 }
                 
@@ -479,7 +480,7 @@ public class Check extends GridPane {
             if (rightCol < 8 && downRow < 8) {
                 for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == rightCol && GridPane.getRowIndex(node) == downRow) {
-                        kingDownRight = (Squares) node;
+                        kingDownRight = (CheckerSquares) node;
                     }
                 }
                 
@@ -493,7 +494,7 @@ public class Check extends GridPane {
             if (leftCol >= 0 && upRow >= 0) {
                 for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == leftCol && GridPane.getRowIndex(node) == upRow) {
-                        kingUpLeft = (Squares) node;
+                        kingUpLeft = (CheckerSquares) node;
                     }
                 }
                 if (!kingUpLeft.hasPiece()) {
@@ -505,7 +506,7 @@ public class Check extends GridPane {
             if (rightCol < 8 && upRow >= 0) {
                 for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == rightCol && GridPane.getRowIndex(node) == upRow) {
-                        kingUpRight = (Squares) node;
+                        kingUpRight = (CheckerSquares) node;
                     }
                 }
                 
@@ -571,7 +572,7 @@ public class Check extends GridPane {
                         
                         for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
-                                kingDownLeft = (Squares) node;
+                                kingDownLeft = (CheckerSquares) node;
                             }
                         }
                         
@@ -601,7 +602,7 @@ public class Check extends GridPane {
                         
                         for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
-                                kingDownRight = (Squares) node;
+                                kingDownRight = (CheckerSquares) node;
                             }
                         }
                         
@@ -631,7 +632,7 @@ public class Check extends GridPane {
                         
                         for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
-                                kingUpLeft = (Squares) node;
+                                kingUpLeft = (CheckerSquares) node;
                             }
                         }
                         
@@ -661,7 +662,7 @@ public class Check extends GridPane {
                         
                         for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
-                                kingUpRight = (Squares) node;
+                                kingUpRight = (CheckerSquares) node;
                             }
                         }
                         
@@ -700,7 +701,7 @@ public class Check extends GridPane {
             if (leftCol >= 0 && leftRow < 8) {
                 for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == leftCol && GridPane.getRowIndex(node) == leftRow) {
-                        leftSquare = (Squares) node;
+                        leftSquare = (CheckerSquares) node;
                     }
                 }
                 
@@ -715,7 +716,7 @@ public class Check extends GridPane {
             if (rightCol < 8 && rightRow < 8) {
                 for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == rightCol && GridPane.getRowIndex(node) == rightRow) {
-                        rightSquare = (Squares) node;
+                        rightSquare = (CheckerSquares) node;
                     }
                 }
                 
@@ -765,7 +766,7 @@ public class Check extends GridPane {
                         
                         for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
-                                leftSquare = (Squares) node;
+                                leftSquare = (CheckerSquares) node;
                             }
                         }
                         
@@ -798,7 +799,7 @@ public class Check extends GridPane {
                         
                         for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
-                                rightSquare = (Squares) node;
+                                rightSquare = (CheckerSquares) node;
                             }
                         }
                         
@@ -835,7 +836,7 @@ public class Check extends GridPane {
             if (leftCol >= 0 && leftRow >= 0) {
                 for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == leftCol && GridPane.getRowIndex(node) == leftRow) {
-                        leftSquare = (Squares) node;
+                        leftSquare = (CheckerSquares) node;
                     }
                 }
                 
@@ -850,7 +851,7 @@ public class Check extends GridPane {
             if (rightCol < 8 && rightRow >= 0) {
                 for (Node node : getChildren()) {
                     if (GridPane.getColumnIndex(node) == rightCol && GridPane.getRowIndex(node) == rightRow) {
-                        rightSquare = (Squares) node;
+                        rightSquare = (CheckerSquares) node;
                     }
                 }
                 
@@ -903,7 +904,7 @@ public class Check extends GridPane {
                         
                         for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
-                                leftSquare = (Squares) node;
+                                leftSquare = (CheckerSquares) node;
                             }
                         }
                         
@@ -936,7 +937,7 @@ public class Check extends GridPane {
                         
                         for (Node node : getChildren()) {
                             if (GridPane.getColumnIndex(node) == jumpCol && GridPane.getRowIndex(node) == jumpRow) {
-                                rightSquare = (Squares) node;
+                                rightSquare = (CheckerSquares) node;
                             }
                         }
                         
@@ -957,6 +958,37 @@ public class Check extends GridPane {
         }
     }
 
+    public void reset() {
+        getChildren().clear();
+        int color = 0;
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 9; col++) {
+                CheckerSquares square;
+                if (color % 2 == 0) {
+                   square = new CheckerSquares(Color.YELLOW);
+                } else {
+                    if(row <= 2) {
+                        CheckerPieces pieceB = new CheckerPieces(Color.BLACK);
+
+                        square = new CheckerSquares(Color.PURPLE, pieceB);
+                        square.setOnMouseClicked(this::move);
+                    } else if (row >=5 ) {
+                        CheckerPieces pieceW = new CheckerPieces(Color.WHITE);
+                        square = new CheckerSquares(Color.PURPLE, pieceW);
+                        square.setOnMouseClicked(this::move);
+                    } else {
+                   square = new CheckerSquares(Color.PURPLE);
+                   square.setOnMouseClicked(this::move);
+                    }
+                }
+                add(square, col, row);
+
+                color++;
+            }
+        }
+        
+    }
+    
     public String winner() {
         if (deadW == 12) {
             return "black";
