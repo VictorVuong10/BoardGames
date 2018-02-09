@@ -72,13 +72,14 @@ public abstract class ChessPiece extends ImageView {
             square = dest;
             square.addPiece(this);
             firstMove = false;
+            if(justEnPassant) {
+                justEnPassant = false;
+            }else if (!justEnPassant && board.isenPassant()) {
+                board.removeEnPassant();
+            }
+            
         } else {
             square.centerPiece();
-        }
-        if(justEnPassant) {
-            justEnPassant = false;
-        }else if (!justEnPassant && board.isenPassant()) {
-            board.removeEnPassant();
         }
         
     }

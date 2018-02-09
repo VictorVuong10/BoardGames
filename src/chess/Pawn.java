@@ -36,7 +36,7 @@ public class Pawn extends ChessPiece{
                     }
                     if (colMove == 0 && !dest.hasPiece()) {
                             return true;
-                    } else if (board.isenPassant() && colMove == 1) {
+                    } else if (board.isenPassant() && colMove == 1 && board.enPassantSquare().getCords().getX() == dest.getCords().getX()) {
                             capture(board.enPassantSquare());
                             return true;
                     }else if(colMove == 1 && dest.hasPiece()) {
@@ -67,8 +67,8 @@ public class Pawn extends ChessPiece{
                     }
                     if (colMove == 0 && !dest.hasPiece()) {
                             return true;
-                    } else if (board.isenPassant() && colMove == 1) {
-                        capture(board.enPassantSquare());
+                    } else if (board.isenPassant() && colMove == 1 && board.enPassantSquare().getCords().getX() == dest.getCords().getX()) {
+                            capture(board.enPassantSquare());
                         return true;
                     } else if (colMove == 1 && dest.hasPiece()) {
                         return canCapture();
