@@ -1,7 +1,6 @@
 package chess;
 
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 
 public class Pawn extends ChessPiece{
 
@@ -18,7 +17,6 @@ public class Pawn extends ChessPiece{
         } else {
             setImage(new Image("pawnlight.png"));
         }
-
         
     }
 

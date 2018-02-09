@@ -15,6 +15,7 @@ public class ChessBoard extends GridPane {
     private ChessPiece selectedPiece;
     private Boolean enPassant;
     private ChessSquare enPassantSquare;
+    private boolean darkSquare;
     
     public ChessBoard() {
         makeBoard();
@@ -106,14 +107,17 @@ public class ChessBoard extends GridPane {
     
     public void makeBoard() {
         
-        boolean darkSquare = true;
+        darkSquare = true;
         for (int row = 0; row < 8; row += 1) {
             darkSquare = !darkSquare;
             for (int col = 0; col < 8; col += 1) {
                 Point2D cord = new Point2D(col, row);
                 ChessSquare square;
                 ChessPiece piece;
-                if (row < 2 && row >= 1) {
+                
+                if (row == 0 || row == 7) {
+                    square = makeRow(cord);
+                }else if (row == 1) {
                     if(!darkSquare) {
                         piece = new Pawn(Team.DARK, this);
                         square = new ChessSquare(Color.LAVENDERBLUSH, piece, this, cord);
@@ -125,7 +129,7 @@ public class ChessBoard extends GridPane {
                         darkSquare = !darkSquare;
                         piece.addSquare(square);
                     }
-                } else if (row >= 6 && row < 7) {
+                } else if (row == 6) {
                     if(!darkSquare) {
                         piece = new Pawn(Team.LIGHT, this);
                         square = new ChessSquare(Color.LAVENDERBLUSH, piece, this, cord);
@@ -150,8 +154,48 @@ public class ChessBoard extends GridPane {
 
             }
         }
+    }
+    
+    public ChessSquare makeRow(Point2D cord) {
         
+        ChessSquare square;
+        ChessPiece piece;
         
+        switch ((int) cord.getX()) {
+             
+            case 1:
+            case 6:
+                if(!darkSquare) {
+                    if (cord.getY() == 0) {
+                    piece = new Knight(Team.DARK, this);
+                    } else {
+                        piece = new Knight(Team.LIGHT, this);
+                    }
+                    square = new ChessSquare(Color.LAVENDERBLUSH, piece, this, cord);
+                    darkSquare = !darkSquare;
+                    piece.addSquare(square);
+                } else {
+                    if (cord.getY() == 0) {
+                        piece = new Knight(Team.DARK, this);
+                    } else {
+                        piece = new Knight(Team.LIGHT, this);
+                    }
+                    square = new ChessSquare(Color.NAVY, piece, this, cord);
+                    darkSquare = !darkSquare;
+                    piece.addSquare(square);
+                }
+                break;
+           default:
+               if(!darkSquare) {
+                   square = new ChessSquare(Color.LAVENDERBLUSH, this, cord);
+                   darkSquare = !darkSquare;
+               } else {
+                   square = new ChessSquare(Color.NAVY, this, cord);
+                   darkSquare = !darkSquare;
+               }
+         
+        }
+     return square;
     }
 
 }
