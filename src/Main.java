@@ -18,6 +18,7 @@ public class Main extends Application {
     int appWidth;
     Button button;
     Button button2;
+    Scene scene;
     @Override
     public void start(Stage primaryStage) throws Exception {
         checkers = new Check(this);
@@ -36,7 +37,7 @@ public class Main extends Application {
         game.getChildren().add(button2);
         button.setOnAction(this::game);
         button2.setOnAction(this::game);
-        Scene scene = new Scene(game, appWidth, appHeight, Color.BLACK);
+        scene = new Scene(game, appWidth, appHeight, Color.BLACK);
 
         primaryStage.setTitle("Board Games");
         primaryStage.setScene(scene);
@@ -48,6 +49,7 @@ public class Main extends Application {
         if (event.getSource() == button) {
         game.getChildren().add(checkers);
         } else if (event.getSource() == button2) {
+            scene.setFill(Color.WHITE);
             game.getChildren().add(othello);
         }
     }

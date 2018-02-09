@@ -12,7 +12,7 @@ public class OthelloSquares extends Squares {
     
     
     public OthelloSquares(OthelloPieces piece) {
-        rect = new Rectangle(100, 100, Color.MINTCREAM);
+        rect = new Rectangle(100, 100, Color.CYAN);
         add(rect,0,0);
         rect.setStrokeType(StrokeType.INSIDE);
         rect.setStroke(Color.NAVY);
@@ -22,7 +22,7 @@ public class OthelloSquares extends Squares {
     }
 
     public OthelloSquares() {
-        rect = new Rectangle(100, 100, Color.MINTCREAM);
+        rect = new Rectangle(100, 100, Color.CYAN);
         add(rect,0,0);
         rect.setStrokeType(StrokeType.INSIDE);
         rect.setStroke(Color.NAVY);
@@ -47,4 +47,15 @@ public class OthelloSquares extends Squares {
         
         return true;
     }
+
+    public void over() {
+        rect.opacityProperty().set(0.4);
+        
+    }
+    
+    public void off() {
+        rect.opacityProperty().set(1);
+        
+    }
+    
 }

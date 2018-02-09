@@ -7,6 +7,7 @@ public class CheckerSquares extends Squares {
     private CheckerPieces piece;
     private Rectangle rect;
     
+    //make this a pane then add it to the groups remove from pane on press then get the square on clicked and put it back in if its a valid move i need to add a constructor to add square to pieces.
     
     public CheckerSquares(Color color, CheckerPieces piece) {
         rect = new Rectangle(100, 100, color);
