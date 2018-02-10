@@ -1,14 +1,18 @@
 package chess;
 
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 
 public class Pawn extends ChessPiece{
 
     
+    private boolean firstMove;
+    protected boolean justEnPassant;
     
     public Pawn(Team team, ChessBoard board) {
         firstMove = true;
         type = PieceType.PAWN;
+        justEnPassant = false;
         this.team = team;
         this.board = board;
         
@@ -112,7 +116,6 @@ public class Pawn extends ChessPiece{
     }
     
     
-//    @Override
 //    public void Move(MouseEvent e) {
 //        dest = board.getGridSquare((int) (Math.floor(e.getSceneX() / 100)),
 //                (int)  (Math.floor(e.getSceneY() / 100)));
@@ -128,4 +131,27 @@ public class Pawn extends ChessPiece{
 //          square.centerPiece();
 //      }
 //    }
+    @Override
+    public void Move(MouseEvent e) {
+        dest = board.getGridSquare((int) (Math.floor(e.getSceneX() / 100)),
+                (int)  (Math.floor(e.getSceneY() / 100)));
+          if(calcMove(dest)) {
+              square.removePiece();
+              square = dest;
+              square.addPiece(this);
+              firstMove = false;
+              if(justEnPassant) {
+                  justEnPassant = false;
+              }else if (!justEnPassant && board.isenPassant()) {
+                  board.removeEnPassant();
+              }
+              
+          } else {
+              square.centerPiece();
+          }
+      }
+    
+    
+    
+    
 }

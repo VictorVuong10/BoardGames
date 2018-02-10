@@ -1,12 +1,12 @@
 package chess;
 
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 
 public class Knight extends ChessPiece{
 
     
     public Knight(Team team, ChessBoard board) {
-        firstMove = true;
         type = PieceType.KNIGHT;
         this.team = team;
         this.board = board;
@@ -20,7 +20,20 @@ public class Knight extends ChessPiece{
     
     @Override
     public boolean calcMove(ChessSquare dest) {
-        //something like dest cords subtract orig cords then add the x and y and that equals three then other calcs;
+        
+        Point2D newCords = dest.getCords().subtract(square.getCords());
+        
+        if (Math.abs(newCords.getX()) + Math.abs(newCords.getY()) == 3 
+                && newCords.getX() != 0 && newCords.getY() != 0) {
+            if(dest.hasPiece()) {
+                if(dest.getPiece().getTeam() != team) {
+                    return canCapture();
+                }
+                    
+            } else {
+                return true;
+            }
+        }
         return false;
     }
 

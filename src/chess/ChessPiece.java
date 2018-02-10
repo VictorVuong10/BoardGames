@@ -13,9 +13,7 @@ public abstract class ChessPiece extends ImageView {
     protected ChessSquare square;
     protected ChessBoard board;
     protected ChessSquare dest;
-    protected boolean firstMove;
     protected PieceType type;
-    protected boolean justEnPassant;
     
     public ChessPiece() {
         
@@ -24,7 +22,6 @@ public abstract class ChessPiece extends ImageView {
         setOnMouseReleased(this::Move);
         setFitHeight(90);
         setFitWidth(90);
-        justEnPassant = false;
     }
     
     abstract public boolean calcMove(ChessSquare dest);
@@ -37,8 +34,14 @@ public abstract class ChessPiece extends ImageView {
     
     final public void Dragged(MouseEvent e) {
         
-        setX(e.getX() - 45);
-        setY(e.getY() - 45);
+        if(e.getSceneX() >= 0 && e.getSceneX() <= 800 && e.getSceneY() >= 0 && e.getSceneY() <= 800) {
+            setX(e.getX() - 45);
+            setY(e.getY() - 45);
+        } else {
+            square.centerPiece();
+        }
+        
+        
         
         //add it tosquare, then remove from the square, add to group higher than a gridpane to make it dragable? or auto add to the group..??? so that it is dragable. so its in group and in square, but not in grid pane?// or not use gridpane at all
         //and use a group? wiht a 2d array????
@@ -64,24 +67,42 @@ public abstract class ChessPiece extends ImageView {
 //        
 //    }
     
-     final public void Move(MouseEvent e) {
-      dest = board.getGridSquare((int) (Math.floor(e.getSceneX() / 100)),
-              (int)  (Math.floor(e.getSceneY() / 100)));
-        if(calcMove(dest)) {
-            square.removePiece();
-            square = dest;
-            square.addPiece(this);
-            firstMove = false;
-            if(justEnPassant) {
-                justEnPassant = false;
-            }else if (!justEnPassant && board.isenPassant()) {
-                board.removeEnPassant();
-            }
-            
-        } else {
-            square.centerPiece();
-        }
+//     public void Move(MouseEvent e) {
+//      dest = board.getGridSquare((int) (Math.floor(e.getSceneX() / 100)),
+//              (int)  (Math.floor(e.getSceneY() / 100)));
+//        if(calcMove(dest)) {
+//            square.removePiece();
+//            square = dest;
+//            square.addPiece(this);
+//            firstMove = false;
+//            if(justEnPassant) {
+//                justEnPassant = false;
+//            }else if (!justEnPassant && board.isenPassant()) {
+//                board.removeEnPassant();
+//            }
+//            
+//        } else {
+//            square.centerPiece();
+//        }
+//        
+//    }
+    
+    
+    public void Move(MouseEvent e) {
         
+        
+        if(e.getSceneX() >= 0 && e.getSceneX() <= 800 && e.getSceneY() >= 0 && e.getSceneY() <= 800) {
+            dest = board.getGridSquare((int) (Math.floor(e.getSceneX() / 100)),
+                    (int)  (Math.floor(e.getSceneY() / 100)));
+              if(calcMove(dest)) {
+                  square.removePiece();
+                  square = dest;
+                  square.addPiece(this);
+              } else {
+                  square.centerPiece();
+              }
+              
+        }
     }
     
     final public boolean canCapture() {
